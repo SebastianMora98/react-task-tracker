@@ -1,6 +1,7 @@
+import { useState } from "react";
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
-import { useState } from "react";
+import AddTask from "./components/AddTask";
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -38,9 +39,15 @@ function App() {
     );
   };
 
+  const addTask = (task) => {
+    const id = Math.floor(Math.random() * 100 + 1);
+    setTasks([...tasks, { id: id, ...task }]);
+  };
+
   return (
     <div className="container">
       <Header title="hola"></Header>
+      <AddTask onAdd={addTask}></AddTask>
       {tasks.length > 0 ? (
         <Tasks
           tasks={tasks}
