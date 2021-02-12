@@ -5,10 +5,13 @@ import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import Footer from "./components/Footer";
 import About from "./components/About";
+require("dotenv").config();
 
 function App() {
   const [showAddTask, setShowAddTask] = useState(true);
   const [tasks, setTasks] = useState([]);
+
+  const endpoint = process.env.REACT_APP_API;
 
   useEffect(() => {
     const getTask = async () => {
@@ -19,18 +22,18 @@ function App() {
   }, []);
 
   const fetchTasks = async () => {
-    const res = await fetch("http://localhost:5000/tasks");
+    const res = await fetch(`${endpoint}/tasks`);
     const data = await res.json();
     return data;
   };
   const fetchTask = async (id) => {
-    const res = await fetch(`http://localhost:5000/tasks/${id}`);
+    const res = await fetch(`${endpoint}/tasks/${id}`);
     const data = await res.json();
     return data;
   };
 
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:5000/tasks/${id}`, {
+    await fetch(`${endpoint}/tasks/${id}`, {
       method: "DELETE",
     });
     setTasks(tasks.filter((task) => task.id !== id));
@@ -45,7 +48,7 @@ function App() {
 
     const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder };
 
-    const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+    const res = await fetch(`${endpoint}/tasks/${id}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -74,7 +77,7 @@ function App() {
   // };
 
   const addTask = async (task) => {
-    const res = await fetch(`http://localhost:5000/tasks`, {
+    const res = await fetch(`${endpoint}/tasks`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
