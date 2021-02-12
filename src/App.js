@@ -11,7 +11,9 @@ function App() {
   const [showAddTask, setShowAddTask] = useState(true);
   const [tasks, setTasks] = useState([]);
 
-  const endpoint = process.env.REACT_APP_API;
+  const endpoint = process.env.API || "http://localhost:4200";
+
+  console.log(endpoint);
 
   useEffect(() => {
     const getTask = async () => {
